@@ -19,7 +19,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/user" element={<User />} />
-            <Route path="/fdemo" element={<Formikdemo />} />
           </Routes>
         </Router>
       </header>

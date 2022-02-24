@@ -7,7 +7,6 @@ export const Home = () => {
             <Counter />
             <div>Home Page</div>
             <Link to="/user">User </Link>
-            <Link to="/fdemo">formik </Link>
         </div>
     )
 }
