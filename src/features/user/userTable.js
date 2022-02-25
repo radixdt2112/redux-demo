@@ -7,33 +7,27 @@ import {
     TableHead,
     TableRow,
     Paper,
-
-    Button
 } from '@mui/material';
 import { red, green } from '@mui/material/colors';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { getUsers, setUserData } from './userSlice';
-import { useDispatch } from 'react-redux';
+import { getUsers } from './userSlice';
+import ConfirmBoxModel from './ConfirmBoxModel';
 
 
 const UserTable = ({ state, handleEditData, setUserDialog }) => {
     const [list, setList] = useState(state);
+    const [confirmBox, setConfirmBox] = useState(false);
 
-    const dispatch = useDispatch();
+    const [selectId, setSelectId] = useState('');
+    
     useEffect(() => {
         setList(state);
     }, [state]);
 
-
-
     const handleDelete = (id) => {
-        let users = getUsers();
-        if (users) {
-            users.splice(users.findIndex(a => a.id === id), 1);
-            dispatch(setUserData(users));
-            localStorage.setItem("Users", JSON.stringify(users));
-        }
+            setSelectId(id);
+            setConfirmBox(true);
     }
 
     const handleEdit = (id) => {
@@ -41,7 +35,6 @@ const UserTable = ({ state, handleEditData, setUserDialog }) => {
         let users = getUsers();
         let editData = users.find(i => i.id == id);
         handleEditData(editData);
-        // console.log(editData);
     }
 
     if (list.length > 0) {
@@ -82,6 +75,8 @@ const UserTable = ({ state, handleEditData, setUserDialog }) => {
                 </TableBody>
             </Table>
         </TableContainer>
+
+            <ConfirmBoxModel setConfirmBox={setConfirmBox} confirmBox={confirmBox} selectId={selectId} />
         </div>
     }
     else {

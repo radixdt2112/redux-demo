@@ -4,7 +4,7 @@ import { addUser, setUserData, getUsers } from './userSlice';
 //import { UserModal } from './UserModal';
 import { usersList } from "./userSlice";
 import { nanoid } from '@reduxjs/toolkit'
-import { TextField } from 'formik-mui';
+import { TextField, Select } from 'formik-mui';
 import {
     Button,
     Dialog,
@@ -12,18 +12,19 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-
+    MenuItem,
     Grid,
 
 } from '@mui/material';
 import * as Yup from 'yup';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import UserTable from './userTable';
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
 });
+
 
 export const User = () => {
 
@@ -75,10 +76,13 @@ export const User = () => {
         if (editData) {
             if (userList) {
                 let editData = userList.find(i => i.id == editid);
+                const index = userList.findIndex(obj => obj.id == editid);
                 editData = values;
                 editData.id = editid;
-                userList.splice(userList.findIndex(a => a.id === editid), 1);
-                userList.push(editData);
+                userList[index] = editData;
+
+                //  userList.splice(userList.findIndex(a => a.id === editid), 1);
+                //  userList.push(editData);
                 dispatch(setUserData(userList));
                 localStorage.setItem("Users", JSON.stringify(userList));
 
@@ -106,6 +110,12 @@ export const User = () => {
 
     };
 
+    const QualificationList = [
+        { label: 'BE', value: 'BE' },
+        { label: 'BCA', value: 'BCA' },
+        { label: 'B.Pharm', value: 'B.Pharm' },
+    ];
+
     return (
         <React.Fragment>
             <h1>
@@ -131,8 +141,7 @@ export const User = () => {
             <Formik initialValues={initialValues} validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
                     handleSubmit(values, resetForm);
-                }}
-                enableReinitialize>{({ values, resetForm, errors, touched, handleSubmit }) => {
+                }} enableReinitialize>{({ values, resetForm, handleSubmit }) => {
                     return <Dialog
                         open={userDialog}
                         onClose={handleClose}
@@ -157,9 +166,9 @@ export const User = () => {
                                             type="text"
                                             name="firstName"
                                             component={TextField}
-                                            style={{ margin: "3px", padding: "5px", outline: "none" }}
+
                                             placeholder="First Name"
-                                            fullWidth 
+                                            fullWidth
                                         />
 
                                     </Grid>
@@ -173,7 +182,7 @@ export const User = () => {
                                             component={TextField}
                                             name="lastName"
                                             placeholder="Last Name"
-                                            style={{ margin: "3px", padding: "5px", outline: "none" }}
+
                                             fullWidth
                                         />
 
@@ -191,7 +200,7 @@ export const User = () => {
                                 />
                             </Grid> */}
 
-                                    <Grid item xs={12}>
+                                    {/* <Grid item xs={12}>
                                         <Field
                                             id="Qualification"
                                             margin="dense"
@@ -201,13 +210,37 @@ export const User = () => {
                                             name="Qualification"
                                             placeholder="Qualification"
                                             component={TextField}
-                                            style={{ margin: "3px", padding: "5px", outline: "none" }}
                                             fullWidth
 
                                         />
+                                    </Grid> */}
+
+
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={Select}
+                                            id="Qualification"
+                                            margin="dense"
+                                            variant="outlined"
+                                            label="Qualification"
+                                            type="text"
+                                            name="Qualification"
+                                            placeholder="Qualification"
+                                            style={{ width: 300 }}
+
+                                        >
+                                            {QualificationList?.length > 0 &&
+                                                QualificationList.map((item, index) => (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={item?.value}
+                                                    >
+                                                        {item?.label}
+                                                    </MenuItem>
+                                                ))}
+                                        </Field>
                                     </Grid>
                                 </Grid>
-
                             </DialogContent>
                             <DialogActions>
                                 <Button
