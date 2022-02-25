@@ -187,34 +187,7 @@ export const User = () => {
                                         />
 
                                     </Grid>
-                                    {/* <Grid item xs={12}>
-                                <Field
-                                    component={TextField}
-                                    margin="dense"
-                                    variant="outlined"
-                                    label="Email"
-                                    type="text"
-                                    name="email"
-                                    placeholder="Email"
-                                    fullWidth
-                                />
-                            </Grid> */}
-
-                                    {/* <Grid item xs={12}>
-                                        <Field
-                                            id="Qualification"
-                                            margin="dense"
-                                            variant="outlined"
-                                            label="Qualification"
-                                            type="text"
-                                            name="Qualification"
-                                            placeholder="Qualification"
-                                            component={TextField}
-                                            fullWidth
-
-                                        />
-                                    </Grid> */}
-
+                                
 
                                     <Grid item xs={12}>
                                         <Field
