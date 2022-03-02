@@ -20,14 +20,15 @@ const UserTable = ({ state, handleEditData, setUserDialog }) => {
     const [confirmBox, setConfirmBox] = useState(false);
 
     const [selectId, setSelectId] = useState('');
-    
+
     useEffect(() => {
         setList(state);
     }, [state]);
 
-    const handleDelete = (id) => {
-            setSelectId(id);
-            setConfirmBox(true);
+    const handleDelete = (id) => (event) => {
+        console.log(event);
+        setSelectId(id);
+        setConfirmBox(true);
     }
 
     const handleEdit = (id) => {
@@ -67,7 +68,7 @@ const UserTable = ({ state, handleEditData, setUserDialog }) => {
                                 Delete
                                </Button> */}
                                 <EditIcon sx={{ mx: 2, color: green[600] }} style={{ cursor: 'pointer' }} onClick={() => handleEdit(row.id)} />
-                                <DeleteIcon sx={{ color: red[600] }} onClick={() => handleDelete(row.id)} style={{ cursor: 'pointer' }} />
+                                <DeleteIcon sx={{ color: red[600] }} onClick={handleDelete(row.id)} style={{ cursor: 'pointer' }} />
                             </TableCell>
 
                         </TableRow>
